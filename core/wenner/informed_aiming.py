@@ -4,16 +4,16 @@
 # Jacob Wenner
 # modified 2026-03-06, Kaleb Troyer
 
-import numpy as np
-import sys
-import matplotlib.pyplot as plt
 import matplotlib.patches as patch
-from mpl_toolkits.axes_grid1 import make_axes_locatable
-from matplotlib import cm
+import matplotlib.pyplot as plt
+import scipy.optimize as scOpt
+import numpy as np
 import matplotlib
 import json
+import sys
 import os
-import scipy.optimize as scOpt
+from mpl_toolkits.axes_grid1 import make_axes_locatable
+from matplotlib import cm
 
 import damage_tool
 import tube_jwenner
@@ -148,7 +148,7 @@ def generate_ideal_fluxmap(dmg_case, tube, LTE_desired, mflow, W_panel, L_t, flo
     else:
         print('flowpath not recognized - could not calculate incident power')
 
-    return rec_flux_dict, Q_inc_rec, Areas, A_req
+    return rec_flux_dict, Q_inc_rec, A_req
 
 def generate_ideal_fluxmap_with_offset(dmg_case, tube, LTE_desired, mflow, W_panel, L_t, v_offset, flowpath_config, show_LTE_ctr=False, cutoff=270):
     """
@@ -494,7 +494,7 @@ def plot_ideal_fluxmap(rec_flux_dict,H,W,flow_config,img_name = 'default_save'):
 
     return
 
-def plot_ideal_fluxmap_w_offset(rec_flux_dict, H, W, flow_config, img_name = 'default_save'):
+def plot_ideal_fluxmap_w_offset(rec_flux_dict, H, W, flow_config, savefig=False, path=''):
     """
     plots the ideal flux map as exact to geometric values as possible
     ---
@@ -503,15 +503,15 @@ def plot_ideal_fluxmap_w_offset(rec_flux_dict, H, W, flow_config, img_name = 'de
     W - total receiver width (m)
     flow_config - string. Options: "2_ctr"
     """
-    xpts        =np.array(list(rec_flux_dict.keys()),dtype=float)
-    xpt_keys    =list(rec_flux_dict.keys())
+    xpts     = np.array(list(rec_flux_dict.keys()),dtype=float)
+    xpt_keys = list(rec_flux_dict.keys())
 
-    figDMG,axDMG    =plt.subplots(tight_layout=True)
-    color_scheme    ='viridis'
-    cscale          =matplotlib.pyplot.get_cmap(color_scheme, 100)
+    figDMG,axDMG = plt.subplots(tight_layout=True)
+    color_scheme = 'viridis'
+    cscale       = matplotlib.pyplot.get_cmap(color_scheme, 100)
 
     # find the maximum flux
-    flux_max =0 # just an initial value
+    flux_max = 0 # just an initial value
     # loop through every panel, create arrays of flux values
     for xpt_key in xpt_keys:
         flux_func_list          =np.array(rec_flux_dict[xpt_key]['fluxes'])
@@ -581,18 +581,20 @@ def plot_ideal_fluxmap_w_offset(rec_flux_dict, H, W, flow_config, img_name = 'de
     axDMG.set_ylim(0,H)
     axDMG.set_xlabel('x-coordinate (m)',fontsize=12)
     axDMG.set_ylabel('y-coordinate (m)',fontsize=12)
-    divider = make_axes_locatable(axDMG)                           # thanks, stack exchange!
-    cax = divider.append_axes("right", size="2%", pad=0.08)     # ^ thanks
+    divider = make_axes_locatable(axDMG)                    # thanks, stack exchange!
+    cax = divider.append_axes("right", size="2%", pad=0.08) # ^ thanks
     cb = figDMG.colorbar(cm.ScalarMappable(matplotlib.colors.Normalize(vmin=0, vmax=flux_max/1e3,clip=False),cmap=color_scheme), cax=cax)
     cb.set_label('incident flux (kW/m$^2$)',  fontsize=12)
     axDMG.set_aspect('equal')
-    plt.savefig(f'imgs/ideal_fluxmap_w_offset_{img_name}.png',dpi=300)
+    if savefig:
+        file = 'ideal_fluxmap_w_offset.png'
+        plt.savefig(os.path.join(path, file),dpi=300)
     plt.show()
     plt.close(figDMG)
 
     return
 
-def plot_ideal_fluxgrid(fluxgrid, H, W, flow_config,img_name='default_save', display=False):
+def plot_ideal_fluxgrid(fluxgrid, H, W, flow_config, savefig=False, display=False, path=''):
     """
     plots the fluxgrid realistically by scaling grid to the height and width
     ---
@@ -633,9 +635,9 @@ def plot_ideal_fluxgrid(fluxgrid, H, W, flow_config,img_name='default_save', dis
         # ax.set_xlabel('x position (m)', fontsize=14)
         # ax.set_ylabel('y position (m)', fontsize=14)
         # ##
-        path = os.path.join(os.getcwd(), 'wenner', 'Chapter_4', 'imgs')
-        file = f'{img_name}_flux_grid_map.png'
-        plt.savefig(os.path.join(path, file), dpi=300)
+        file = f'flux_grid_map.png'
+        if savefig:
+            plt.savefig(os.path.join(path, file), dpi=300)
         if display: plt.show()
     else:
         print('flow configuration not recognized')
@@ -687,10 +689,10 @@ def fully_utilize_receiver_maximize_lifetime(dmg_case, tube, mflow, W_panel, W_r
 
         # if non zero, then implement the fluxmap generater that considers offset
         if is_offset_zero:
-            rec_dict, Q_inc_rec, Areas, A_reqd   =generate_ideal_fluxmap(dmg_case, tube, LTE_des, mflow, W_panel, L_t, flowpath_config, cutoff=cutoff)
-        # if zero, then implement the old fluxmap 
+            rec_dict, Q_inc_rec, A_reqd = generate_ideal_fluxmap(dmg_case, tube, LTE_des, mflow, W_panel, L_t, flowpath_config, cutoff=cutoff)
+        # if zero, then implement the old fluxmap
         else:
-            rec_dict, Q_inc_rec, Areas, A_reqd   =generate_ideal_fluxmap_with_offset(dmg_case, tube, LTE_des, mflow, W_panel, L_t, v_offset, flowpath_config, show_LTE_ctr=False, cutoff=cutoff)
+            rec_dict, Q_inc_rec, A_reqd = generate_ideal_fluxmap_with_offset(dmg_case, tube, LTE_des, mflow, W_panel, L_t, v_offset, flowpath_config, show_LTE_ctr=False, cutoff=cutoff)
 
         # compare the width to the allowable width
         if flowpath_config == '2_ctr':
@@ -729,16 +731,19 @@ def fully_utilize_receiver_maximize_lifetime(dmg_case, tube, mflow, W_panel, W_r
     ## output should use the decided LTE  to generate final fluxmap
         # if non zero, then implement the fluxmap generater that considers offset
     if is_offset_zero:
-        rec_dict, Q_inc_rec, Areas, A_reqd   =generate_ideal_fluxmap(dmg_case, tube, LTE_des, mflow, W_panel, L_t, flowpath_config, cutoff=cutoff)
-    # if zero, then implement the old fluxmap 
-    else:
-        rec_dict, Q_inc_rec, Areas, A_reqd   =generate_ideal_fluxmap_with_offset(dmg_case, tube, LTE_des, mflow, W_panel, L_t, v_offset, flowpath_config, show_LTE_ctr=True, cutoff=cutoff)
+        rec_dict, Q_inc_rec, A_reqd = generate_ideal_fluxmap(
+            dmg_case, tube, LTE_des, mflow, W_panel, L_t, flowpath_config, cutoff=cutoff
+        )
+    else: # if zero, then implement the old fluxmap
+        rec_dict, Q_inc_rec, A_reqd = generate_ideal_fluxmap_with_offset(
+            dmg_case, tube, LTE_des, mflow, W_panel, L_t, v_offset, flowpath_config, show_LTE_ctr=True, cutoff=cutoff
+        )
     ##
     print('\n')
     print(f'--- number of iterations:{iter} ---')
     print(f'--- final selected lifetime: {LTE_des} years ---')
     print('\n')
-    return rec_dict, Q_inc_rec, Areas, A_reqd
+    return rec_dict, Q_inc_rec, A_reqd
 
 def build_ideal_fluxgrid(filestring, res_y, H, W, flowpath_config):
     """
@@ -918,7 +923,7 @@ if __name__ == "__main__":
 
     ## test getting the damage tool
     dmg_model = damage_tool.damageTool('A230')
-    dmg_model.make_contour_function(30)
+    dmg_model.make_contour_function_from_interpolator(30)
 
     # instantiate the tube, check if HTC is reasonable for a test value
     ## --- these lines needed in main
@@ -947,18 +952,21 @@ if __name__ == "__main__":
 
     # new way to generate an ideal flux map
     v_offset = 0.5 # need high res if offset region is small
-    rec_dict, Q_inc_rec, Areas, Areqd = generate_ideal_fluxmap_with_offset(damage_tool.damageTool('A230'), tube, LTE_goal, mflow, W_panel, L_t, v_offset, flowpath_config)
+    rec_dict, Q_inc_rec, Areqd = generate_ideal_fluxmap_with_offset(damage_tool.damageTool('A230'), tube, LTE_goal, mflow, W_panel, L_t, v_offset, flowpath_config)
     nPanels    = len(list(rec_dict.keys()))
     W          = W_panel*len(rec_dict.keys()) * 2 + 2
     W_receiver = W
     plot_ideal_fluxmap_w_offset(rec_dict, L_t, W, flowpath_config)
 
     # test the utilize_receiver function
-    rec_dict, Q_inc_rec, Areas, Areqd = fully_utilize_receiver_maximize_lifetime(damage_tool.damageTool('A230'), tube, mflow, W_panel, W_receiver, L_t, v_offset, flowpath_config)
+    rec_dict, Q_inc_rec, Areqd = fully_utilize_receiver_maximize_lifetime(
+        damage_tool.damageTool('A230'), tube, mflow, W_panel, W_receiver, L_t, v_offset, flowpath_config
+    )
+
     plot_ideal_fluxmap_w_offset(rec_dict, L_t, W, flowpath_config)
 
     fluxgrid = build_ideal_w_offset_fluxgrid(rec_dict, res_y=100, H=L_t, W=W, flowpath_config=flowpath_config)
-    plot_ideal_fluxgrid(fluxgrid, L_t, W, flowpath_config, img_name=f'test_w_offset_{v_offset}m')
+    plot_ideal_fluxgrid(fluxgrid, L_t, W, flowpath_config)
     print('congrats, name == main')
 
 # EOF

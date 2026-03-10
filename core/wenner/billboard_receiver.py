@@ -1,18 +1,19 @@
-from math import pi, sin, floor
-from copy import deepcopy
+
+import scipy.interpolate as spInt
+import scipy.optimize as scOpt
+import multiprocessing
+import pandas as pd
 import numpy as np
 import timeit
-import multiprocessing
 import json
-import scipy.optimize as scOpt
-import pandas as pd
-import scipy.interpolate as spInt
+from math import pi, sin, floor
+from copy import deepcopy
 
 import operating_conditions
-import tube_jwenner as tube
 import materials
 import settings
 import util
+import tube_jwenner as tube
 
 class BillboardReceiver:
     def __init__(self):

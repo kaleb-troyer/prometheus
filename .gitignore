@@ -1,7 +1,10 @@
 
+# Project specific
+@ref/*
+
 # Data files
 *.xlsx
-*.csv
+# *.csv
 *.json
 *.sif
 

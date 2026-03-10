@@ -1,0 +1,331 @@
+ambient.0.atm_atten_est ,9.71845 ,% ,Average attenuation
+ambient.0.atm_coefs ,0.006789'0.1046'-0.0... (truncated) ,none ,User-defined attenuation
+ambient.0.atm_model ,DELSOL3 clear day ,none ,Atmospheric attenuation model
+ambient.0.class_name ,Climate ,none ,Class name
+ambient.0.del_h2o ,20 ,mm H2O ,Atmospheric precipitable water
+ambient.0.dni_layout ,950 ,W/m2 ,Constant DNI for layout calculations
+ambient.0.dpres ,1 ,atm ,Ambient pressure
+ambient.0.elevation ,588 ,m ,Plant elevation
+ambient.0.insol_type ,Weather file data ,none ,Insolation model
+ambient.0.latitude ,34.8667 ,deg ,Plant latitude
+ambient.0.loc_city ,city name ,none ,Weather file location name
+ambient.0.loc_state ,state name ,none ,Weather file state name
+ambient.0.longitude ,-116.783 ,deg ,Plant longitude
+ambient.0.sim_time_step ,3600 ,sec ,Simulation weather data time step
+ambient.0.sun_csr ,0.1 ,none ,Circumsolar ratio
+ambient.0.sun_csr_adj ,0.0997838 ,none ,Corrected circumsolar ratio
+ambient.0.sun_pos_map , ,[deg'deg] ,sun_pos_map
+ambient.0.sun_rad_limit ,4.65 ,mrad ,Sunshape angular extent
+ambient.0.sun_type ,Limb-darkened sun ,none ,Sunshape model
+ambient.0.time_zone ,-8 ,hr ,Time zone
+ambient.0.user_sun , ,[deg'deg] ,user_sun
+ambient.0.weather_file ,/home/kaleb/!source/... (truncated) ,none ,Weather file
+ambient.0.wf_data ,[P]1'0'1'0'2.8'0.954... (truncated) ,none ,wf_data
+financial.0.class_name ,Financial ,none ,Class name
+financial.0.contingency_cost ,7.86477e+06 ,$ ,Contingency cost
+financial.0.contingency_rate ,7 ,% ,Contingency
+financial.0.fixed_cost ,0 ,$ ,Fixed cost
+financial.0.heliostat_cost ,0 ,$ ,Heliostat field cost
+financial.0.heliostat_spec_cost ,145 ,$/m2 ,Heliostat field
+financial.0.is_pmt_factors ,false , ,Enable payment weighting factors
+financial.0.land_cost ,450000 ,$ ,Land cost
+financial.0.land_spec_cost ,10000 ,$/acre ,Land cost per acre
+financial.0.pmt_factors ,2.064'1.2'1'1.1'0.8'0.7'1'1'1 ,none ,Payment allocation factors
+financial.0.pricing_array ,0.7'0.7'0.7'0.7'0.7'... (truncated) ,none ,Time series schedule of price multipliers
+financial.0.rec_cost ,8.51839e+07 ,$ ,Receiver cost
+financial.0.rec_cost_exp ,0.7 ,none ,Receiver cost scaling exponent
+financial.0.rec_ref_area ,1571 ,m2 ,Receiver reference area
+financial.0.rec_ref_cost ,1.03e+08 ,$ ,Receiver reference cost
+financial.0.sales_tax_cost ,4.82675e+06 ,$ ,Sales tax cost
+financial.0.sales_tax_frac ,80 ,% ,Sales tax rate portion
+financial.0.sales_tax_rate ,5 ,% ,Sales tax rate
+financial.0.schedule_array ,6'6'6'6'6'6'5'5'5'5'... (truncated) ,none ,Time series schedule of TOU periods
+financial.0.site_cost ,0 ,$ ,Site improvements cost
+financial.0.site_spec_cost ,16 ,$/m2 ,Site improvements
+financial.0.total_direct_cost ,1.20219e+08 ,$ ,Total direct cost
+financial.0.total_indirect_cost ,5.27675e+06 ,$ ,Total indirect cost
+financial.0.total_installed_cost ,1.25495e+08 ,$ ,Total installed cost
+financial.0.tower_cost ,2.717e+07 ,$ ,Tower cost
+financial.0.tower_exp ,0.0113 ,none ,Tower cost scaling exponent
+financial.0.tower_fixed_cost ,3e+06 ,$ ,Fixed tower cost
+financial.0.weekday_sched ,66666655444444444444... (truncated) , ,Weekday dispatch period schedule
+financial.0.weekend_sched ,66666655555555555555... (truncated) , ,Weekend dispatch period schedule
+financial.0.wiring_cost ,0 ,$ ,Wiring cost
+financial.0.wiring_user_spec ,0 ,$/m2 ,Wiring specific cost
+fluxsim.0.aim_method ,Image size priority , ,Heliostat aim point method
+fluxsim.0.class_name ,Performance Simulation ,none ,Class name
+fluxsim.0.cloud_depth ,250 ,m ,Cloud depth
+fluxsim.0.cloud_loc_x ,200 ,m ,Cloud location (X)
+fluxsim.0.cloud_loc_y ,200 ,m ,Cloud location (Y)
+fluxsim.0.cloud_opacity ,0.8 ,none ,Cloud opacity
+fluxsim.0.cloud_sep_depth ,1 , ,Cloud pattern depth spacing mult.
+fluxsim.0.cloud_sep_width ,2 , ,Cloud pattern width spacing mult.
+fluxsim.0.cloud_shape ,Elliptical , ,Cloud shape
+fluxsim.0.cloud_skew ,35 ,deg ,Cloud orientation angle
+fluxsim.0.cloud_width ,500 ,m ,Cloud width
+fluxsim.0.flux_data , , ,Flux profile in string form
+fluxsim.0.flux_day ,20 , ,Day of the month
+fluxsim.0.flux_dist ,Triangular , ,Aim point distribution sampling
+fluxsim.0.flux_dni ,950 ,W/m2 ,Direct Normal Irradiation
+fluxsim.0.flux_hour ,12 ,hr ,Hour of the day
+fluxsim.0.flux_model ,Hermite (analytical) ,none ,Flux simulation model
+fluxsim.0.flux_month ,3 , ,Month of the year
+fluxsim.0.flux_solar_az ,182.352 ,deg ,Calculated solar azimuth angle
+fluxsim.0.flux_solar_az_in ,180 , ,Solar azimuth angle (0=N)
+fluxsim.0.flux_solar_el ,55.0542 ,deg ,Calculated solar elevation angle
+fluxsim.0.flux_solar_el_in ,85 , ,Solar elevation angle
+fluxsim.0.flux_time_type ,Hour/Day ,none ,Simulation time spec. method
+fluxsim.0.is_autoscale ,true ,none ,Autoscale
+fluxsim.0.is_cloud_pattern ,true , ,Enable cloud pattern
+fluxsim.0.is_cloud_symd ,true , ,Pattern symmetric in depth direction
+fluxsim.0.is_cloud_symw ,true , ,Pattern symmetric in width direction
+fluxsim.0.is_cloudy ,false , ,Simulate cloud transient
+fluxsim.0.is_dynamic_group ,true ,none ,Include dynamic heliostat grouping
+fluxsim.0.is_load_raydata ,false ,none ,Load existing heliostat ray data
+fluxsim.0.is_optical_err ,true , ,Include optical errors
+fluxsim.0.is_save_raydata ,false ,none ,Save heliostat stage ray data
+fluxsim.0.is_sunshape_err ,true , ,Include sun shape
+fluxsim.0.max_rays ,1000000 ,none ,Maximum number of generated rays
+fluxsim.0.min_rays ,10000 ,none ,Desired number of ray intersections
+fluxsim.0.multi_rec_aim_rand ,0 ,none ,Multi-receiver aimpoint randomization
+fluxsim.0.norm_dist_sigma ,0.25 , ,Aiming distribution standard dev.
+fluxsim.0.plot_zmax ,1000 ,none ,Max
+fluxsim.0.plot_zmin ,0 ,none ,Min
+fluxsim.0.raydata_file ,raydata.dat ,none ,Ray data file
+fluxsim.0.save_data ,false , ,Save all raytrace data
+fluxsim.0.save_data_loc ,soltrace_ray_data.csv , ,ray data
+fluxsim.0.seed ,-1 ,none ,Seed value (-1 for automatic selection)
+fluxsim.0.sigma_limit_x ,2 , ,Min. image offset from receiver edge - X
+fluxsim.0.sigma_limit_y ,2 ,none ,Min. image offset from receiver edge - Y
+fluxsim.0.x_res ,25 ,none ,Flux grid resolution - Horizontal
+fluxsim.0.y_res ,25 ,none ,Flux grid resolution - Vertical
+heliostat.0.area ,144.375 ,m2 ,Total reflective aperture area
+heliostat.0.cant_day ,82 ,day ,Canting day of the year
+heliostat.0.cant_hour ,0 ,hr ,Canting hour (past noon)
+heliostat.0.cant_mag_i ,0 ,none ,Total canting vector - i
+heliostat.0.cant_mag_j ,0 ,none ,Total canting vector - j
+heliostat.0.cant_mag_k ,0 ,none ,Total canting vector - k
+heliostat.0.cant_method ,On-axis at slant ,none ,Heliostat canting method
+heliostat.0.cant_norm_i ,0 ,none ,Normalized canting vector - i
+heliostat.0.cant_norm_j ,0 ,none ,Normalized canting vector - j
+heliostat.0.cant_norm_k ,0 ,none ,Normalized canting vector - k
+heliostat.0.cant_rad_scaled ,6 ,none ,Canting radius factor
+heliostat.0.cant_radius ,0 ,m ,Canting radius
+heliostat.0.cant_sun_az ,0 ,deg ,Sun azimuth at canting
+heliostat.0.cant_sun_el ,0 ,deg ,Sun elevation at canting
+heliostat.0.cant_vect_i ,0 ,none ,Canting vector x-component
+heliostat.0.cant_vect_j ,0 ,none ,Canting vector y-component
+heliostat.0.cant_vect_k ,1 ,none ,Canting vector z-component
+heliostat.0.cant_vect_scale ,400 ,m ,Canting vector magnitude
+heliostat.0.cbdata , ,none ,Data pointer for UI page
+heliostat.0.class_name ,Heliostat ,none ,Class name
+heliostat.0.diameter ,13.77 ,m ,Heliostat diameter
+heliostat.0.err_azimuth ,0 ,rad ,Azimuth pointing error
+heliostat.0.err_elevation ,0 ,rad ,Elevation pointing error
+heliostat.0.err_reflect_x ,0.0002 ,rad ,Reflected beam error in X
+heliostat.0.err_reflect_y ,0.0002 ,rad ,Reflected beam error in Y
+heliostat.0.err_surface_x ,0.00153 ,rad ,Surface slope error in X
+heliostat.0.err_surface_y ,0.00153 ,rad ,Surface slope error in Y
+heliostat.0.err_total ,0.0030665 ,rad ,Total reflected image error
+heliostat.0.focus_method ,At slant ,none ,Heliostat focusing type
+heliostat.0.height ,12.2 ,m ,Structure height
+heliostat.0.helio_name ,Template 1 , ,Heliostat template name
+heliostat.0.id ,0 ,none ,id
+heliostat.0.is_cant_rad_scaled ,true , ,Scale cant radius with tower height
+heliostat.0.is_cant_vect_slant ,false ,none ,Scale vector with slant range
+heliostat.0.is_enabled ,true , ,Is template enabled?
+heliostat.0.is_faceted ,true ,none ,Use multiple panels
+heliostat.0.is_focal_equal ,true ,none ,Use single focal length
+heliostat.0.is_round ,Rectangular ,none ,Heliostat shape
+heliostat.0.is_xfocus ,true ,none ,Focus in X
+heliostat.0.is_yfocus ,true ,none ,Focus in Y
+heliostat.0.n_cant_x ,2 , ,No. horizontal panels
+heliostat.0.n_cant_y ,8 , ,No. vertical panels
+heliostat.0.r_collision ,8.6267 ,m ,Heliostat collision radius
+heliostat.0.ref_total ,0.9025 ,none ,Total optical reflectance
+heliostat.0.reflect_ratio ,0.97 ,none ,Reflective surface ratio
+heliostat.0.reflectivity ,0.95 ,none ,Mirror reflectivity
+heliostat.0.rvel_max_x ,1000 ,rad/s ,rvel_max_x
+heliostat.0.rvel_max_y ,1000 ,rad/s ,rvel_max_y
+heliostat.0.soiling ,0.95 ,none ,Soiling factor
+heliostat.0.st_err_type ,Gaussian ,none ,Optical error type (SolTrace only)
+heliostat.0.temp_az_max ,180 ,deg ,Max. angular boundary for heliostat type
+heliostat.0.temp_az_min ,-180 ,deg ,Min. angular boundary for heliostat type
+heliostat.0.temp_rad_max ,10 ,none ,Maximum radius for heliostat type
+heliostat.0.temp_rad_min ,0.75 ,none ,Minimum radius for heliostat type
+heliostat.0.template_order ,-1 ,none ,template_order
+heliostat.0.track_method ,Continuous ,none ,Heliostat tracking update method
+heliostat.0.track_period ,10 ,sec ,Heliostat tracking update period
+heliostat.0.type ,0 , ,type
+heliostat.0.width ,12.2 ,m ,Structure width
+heliostat.0.x_focal_length ,1000 ,m ,Focal length in X
+heliostat.0.x_gap ,0 ,m ,Cant panel horiz. gap
+heliostat.0.y_focal_length ,1000 ,m ,Focal length in Y
+heliostat.0.y_gap ,0 ,m ,Cant panel vert. gap
+land.0.bound_area ,0 ,acre ,Solar field land area
+land.0.class_name ,Land ,none ,Class name
+land.0.exclusions , , ,exclusions
+land.0.import_tower_lat ,0 ,deg ,Imported land boundary tower latitude
+land.0.import_tower_lon ,0 ,deg ,Imported land boundary tower longitude
+land.0.import_tower_set ,false ,none ,Imported land boundary tower flag
+land.0.inclusions , , ,inclusions
+land.0.is_bounds_array ,false ,none ,Use land boundary array
+land.0.is_bounds_fixed ,false ,none ,Use fixed land bounds
+land.0.is_bounds_scaled ,true ,none ,Bounds scale with tower height
+land.0.is_exclusions_relative ,false ,none ,Exclusions relative to tower position
+land.0.land_area ,45 ,acre ,Total land area
+land.0.land_const ,45 ,acre ,Non-solar field land area
+land.0.land_mult ,1.3 ,none ,Solar field land area multiplier
+land.0.max_fixed_rad ,2000 ,m ,Maximum land radius (fixed)
+land.0.max_scaled_rad ,9.5 ,none ,Maximum field radius
+land.0.min_fixed_rad ,100 ,m ,Minimum land radius (fixed)
+land.0.min_scaled_rad ,0.75 ,none ,Minimum field radius
+land.0.radmax_m ,1852.5 ,m ,Maximum heliostat distance
+land.0.radmin_m ,146.25 ,m ,Minimum heliostat distance
+land.0.tower_offset_x ,0 ,m ,Tower location offset - X
+land.0.tower_offset_y ,0 ,m ,Tower location offset - Y
+optimize.0.algorithm ,COBYLA , ,Optimization algorithm
+optimize.0.aspect_display ,3.61039e-274 ,none ,Current receiver aspect ratio (H/W)
+optimize.0.class_name ,Optimization , ,
+optimize.0.converge_tol ,0.0001 ,none ,Convergence tolerance
+optimize.0.flux_penalty ,0.35 ,none ,Flux overage penalty
+optimize.0.gs_refine_ratio ,1.00396e-109 ,none ,Refinement relative bounding box
+optimize.0.is_log_to_file ,true ,none ,Echo log to file
+optimize.0.log_file_path ,optimization_log.txt ,none ,Log file location
+optimize.0.max_desc_iter ,20 ,none ,Max. no. continuous descent steps
+optimize.0.max_gs_iter ,5 ,none ,Max. refinement iterations
+optimize.0.max_iter ,200 ,none ,Maximum iterations
+optimize.0.max_step ,0.06 ,none ,Initial step size
+optimize.0.multirec_opt_timeout ,60 ,sec ,Multi-receiver optimization solver time
+optimize.0.multirec_screen_mult ,1.25 ,none ,Multi-receiver heliostat screen fraction
+optimize.0.power_penalty ,2 ,none ,Power shortage penalty
+parametric.0.class_name ,Parametric Simulation ,none ,Class name
+parametric.0.eff_file_name ,eff_array.csv , ,Efficiency file name
+parametric.0.flux_file_name ,fluxmap.csv , ,Fluxmap file name
+parametric.0.fluxmap_format ,SAM format , ,Fluxmap data dimensions
+parametric.0.is_fluxmap_norm ,true , ,Normalize flux data
+parametric.0.par_save_field_img ,false ,none ,Save field image
+parametric.0.par_save_flux_dat ,false ,none ,Save receiver flux data
+parametric.0.par_save_flux_img ,false ,none ,Save receiver flux image
+parametric.0.par_save_helio ,false ,none ,Save heliostat performance data
+parametric.0.par_save_summary ,false ,none ,Save performance summary information
+parametric.0.sam_grid_format ,Auto spacing ,none ,SAM data grid format
+parametric.0.sam_out_dir , , ,Output directory
+parametric.0.upar_save_field_img ,false ,none ,Save field image (User)
+parametric.0.upar_save_flux_dat ,false ,none ,Save receiver flux data (User)
+parametric.0.upar_save_flux_img ,false ,none ,Save receiver flux image (User)
+parametric.0.upar_save_helio ,false ,none ,Save heliostat performance data (User)
+parametric.0.upar_save_summary ,false ,none ,Save performance summary info (User)
+parametric.0.user_par_values , ,none ,User parametric values
+receiver.0.absorber_area ,1197.7 ,m2 ,Receiver absorber area
+receiver.0.absorptance ,0.94 ,none ,Receiver thermal absorptance
+receiver.0.accept_ang_type ,Rectangular ,none ,Receiver acceptance angles shape
+receiver.0.accept_ang_x ,360 ,deg ,Receiver horizontal acceptance angle
+receiver.0.accept_ang_y ,180 ,deg ,Receiver vertical acceptance angle
+receiver.0.aperture_area ,381.24 ,m2 ,Receiver aperture area
+receiver.0.aperture_type ,Rectangular , ,Aperture geometry shape
+receiver.0.cbdata , ,none ,Data pointer for UI page
+receiver.0.class_name ,Receiver ,none ,Class name
+receiver.0.curtain_radius ,10 ,m ,Particle curtain radius
+receiver.0.curtain_total_height ,0 ,m ,Particle curtain total height
+receiver.0.curtain_type ,Flat ,none ,Particle curtain type
+receiver.0.flux_profile_type ,Uniform ,none ,Desired receiver flux profile
+receiver.0.id ,0 , ,Template ID
+receiver.0.is_aspect_opt ,true , ,Optimize receiver aspect ratio
+receiver.0.is_enabled ,true , ,Is template enabled?
+receiver.0.is_open_geom ,false , ,Limit receiver panel span angle
+receiver.0.is_polygon ,false , ,Represent receiver as polygon
+receiver.0.is_snout ,false , ,Is SNOUT enabled?
+receiver.0.map_color ,random ,none ,Specified receiver map color
+receiver.0.max_curtain_depth ,1.5 ,m ,Particle curtain entrance depth
+receiver.0.max_curtain_width ,0 ,m ,Particle curtain maximum width
+receiver.0.n_panels ,1 ,none ,Number of receiver panels
+receiver.0.norm_curtain_height ,1 ,none ,Normalized particle curtain height
+receiver.0.norm_curtain_width ,1 ,none ,Normalized particle curtain width
+receiver.0.norm_heights_depths ,0.5'0.8; ,none ,Normalized troughs heights and depths
+receiver.0.optical_height ,195 ,m ,Receiver optical height
+receiver.0.panel_rotation ,0 ,deg ,Receiver panel azimuthal orientation
+receiver.0.peak_flux ,1000 ,kW/m2 ,Allowable peak flux
+receiver.0.piping_loss ,1.989 ,MW ,Receiver piping loss
+receiver.0.piping_loss_coef ,10.2 ,kW/m ,Receiver piping loss coefficient
+receiver.0.piping_loss_const ,0 ,kW ,Receiver piping loss constant
+receiver.0.power_fraction ,1 ,none ,Multi-receiver power fraction
+receiver.0.q_rec_des ,670 ,MW ,Design-point thermal power
+receiver.0.rec_aspect ,1.2238 ,none ,Receiver aspect ratio (H/W)
+receiver.0.rec_azimuth ,0 ,deg ,Receiver orientation azimuth
+receiver.0.rec_cav_aph ,0 ,m ,Cavity aperture height
+receiver.0.rec_cav_apw ,0 ,m ,Cavity aperture width
+receiver.0.rec_cav_apwfrac ,1 ,none ,Cavity aperture width fraction
+receiver.0.rec_cav_blip ,0 ,none ,Cavity bottom lip fractional height
+receiver.0.rec_cav_cdepth ,-0.25 ,none ,Cavity absorber centroid aperture offset
+receiver.0.rec_cav_rad ,8 ,m ,Cavity active surface radius
+receiver.0.rec_cav_tlip ,0 ,none ,Cavity top lip fractional height
+receiver.0.rec_diameter ,17.65 ,m ,Receiver diameter
+receiver.0.rec_elevation ,0 ,deg ,Receiver orientation elevation
+receiver.0.rec_height ,21.6 ,m ,Receiver height
+receiver.0.rec_name ,Receiver 1 , ,Receiver template name
+receiver.0.rec_offset_reference ,Tower ,none ,Receiver offset reference
+receiver.0.rec_offset_x ,0 ,m ,Receiver positioning offset - X axis
+receiver.0.rec_offset_x_global ,0 ,m ,Receiver global positioning offset - X axis
+receiver.0.rec_offset_y ,0 ,m ,Receiver positioning offset - Y axis
+receiver.0.rec_offset_y_global ,0 ,m ,Receiver global positioning offset - Y axis
+receiver.0.rec_offset_z ,0 ,m ,Receiver positioning offset - Z axis
+receiver.0.rec_offset_z_global ,0 ,m ,Receiver global positioning offset - Z axis
+receiver.0.rec_type ,External cylindrical ,none ,Receiver type
+receiver.0.rec_width ,17 ,m ,Receiver width
+receiver.0.snout_depth ,1.5 ,m ,SNOUT depth
+receiver.0.snout_horiz_angle ,120 ,deg ,Horizontal SNOUT angle
+receiver.0.snout_vert_bot_angle ,20 ,deg ,Vertical SNOUT bottom angle
+receiver.0.snout_vert_top_angle ,20 ,deg ,Vertical SNOUT top angle
+receiver.0.therm_eff ,0.946435 ,none ,Receiver calculated thermal efficiency
+receiver.0.therm_loss ,35.931 ,MW ,Design-point thermal loss
+receiver.0.therm_loss_base ,30 ,kW/m2 ,Design point receiver thermal loss
+receiver.0.therm_loss_load ,1'0'0'0; ,none ,Load-based thermal loss adjustment
+receiver.0.therm_loss_wind ,1'0'0'0; ,none ,Wind-based thermal loss adjustment
+receiver.0.user_flux_profile ,1'1'1'1'1;1'1'1'1'1;... (truncated) ,none ,User flux profile data
+solarfield.0.accept_max ,180 ,deg ,Maximum solar field extent angle
+solarfield.0.accept_min ,-180 ,deg ,Minimum solar field extent angle
+solarfield.0.az_spacing ,2 ,none ,Azimuthal spacing factor
+solarfield.0.class_name ,Solar Field ,none ,Class name
+solarfield.0.des_sim_detail ,Representative profiles ,none ,Optimization simulations
+solarfield.0.des_sim_ndays ,4 ,none ,Number of days to simulate
+solarfield.0.des_sim_nhours ,2 ,none ,Simulation hour frequency
+solarfield.0.dni_des ,1111 ,W/m2 ,Design-point DNI value
+solarfield.0.hsort_method ,TOU-weighted power ,none ,Heliostat selection criteria
+solarfield.0.interaction_limit ,100 ,helio-ht ,Heliostat shading interaction limit
+solarfield.0.is_multirec_powfrac ,false ,none ,Specify multi-receiver power fractions
+solarfield.0.is_opt_zoning ,true ,none ,Enable optical layout zone method
+solarfield.0.is_prox_filter ,false ,none ,Apply proximity filter
+solarfield.0.is_sliprow_skipped ,false ,none ,Offset slip plane for blocking
+solarfield.0.is_tht_opt ,true ,none ,Optimize tower height
+solarfield.0.layout_data , , ,Layout data in string form
+solarfield.0.layout_method ,Radial Stagger ,none ,Layout method
+solarfield.0.max_zone_size_az ,1 ,tower-ht ,Max. optical layout zone size - azimuthal
+solarfield.0.max_zone_size_rad ,1 ,tower-ht ,Max. optical layout zone size - radial
+solarfield.0.min_zone_size_az ,0.1 ,tower-ht ,Min. optical layout zone size - azimuthal
+solarfield.0.min_zone_size_rad ,0.1 ,tower-ht ,Min. optical layout zone size - radial
+solarfield.0.prox_filter_frac ,0.03 ,none ,Proximity filter fraction
+solarfield.0.q_des ,670 ,MWt ,Solar field design power
+solarfield.0.rad_spacing_method ,No blocking-dense ,none ,Radial spacing method
+solarfield.0.rec_area ,1197.7 ,m2 ,Total receiver surface area
+solarfield.0.row_spacing_x ,1.1 ,none ,Heliostat spacing factor - X direction
+solarfield.0.row_spacing_y ,1.1 ,none ,Heliostat spacing factor - Y direction
+solarfield.0.sf_area ,0 ,m2 ,Total solar field area
+solarfield.0.shadow_height ,195 ,m ,Tower shadow height
+solarfield.0.shadow_width ,16 ,m ,Tower shadow width
+solarfield.0.sim_step_data ,[P]1'0'1'0'2.8'0.954... (truncated) ,none ,Data used for design simulations
+solarfield.0.slip_plane_blocking ,0.5 ,none ,Allowable blocking in slip plane
+solarfield.0.spacing_reset ,1.33 ,none ,Azimuthal spacing reset limit
+solarfield.0.sun_az_des ,192.657 ,deg ,Calculated design-point solar azimuth
+solarfield.0.sun_az_des_user ,180 ,deg ,Specified design-point solar azimuth
+solarfield.0.sun_el_des ,78.3184 ,deg ,Calculated design-point solar elevation
+solarfield.0.sun_el_des_user ,85 ,deg ,Specified design-point solar elevation
+solarfield.0.sun_loc_des ,Summer solstice ,none ,Sun location at design point
+solarfield.0.temp_which , ,none ,Select heliostat geometry
+solarfield.0.template_rule ,Use single template , ,Heliostat geometry distribution
+solarfield.0.tht ,195 ,m ,Tower optical height
+solarfield.0.trans_limit_fact ,1 ,none ,Packing transition limit factor
+solarfield.0.version ,SolarPILOT Version: 1.6.0 ,none ,SolarPILOT code base version number
+solarfield.0.xy_field_shape ,Hexagon , ,Heliostat field layout shape
+solarfield.0.xy_rect_aspect ,1 ,none ,Layout aspect ratio (Y/X)
+solarfield.0.zone_div_tol ,0.001 ,none ,Optical layout zone mesh tolerance

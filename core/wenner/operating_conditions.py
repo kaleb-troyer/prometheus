@@ -3,6 +3,7 @@
 # Jacob Wenner
 
 import numpy as np
+
 import util
 
 class OperatingConditions:
@@ -72,7 +73,7 @@ class OperatingConditions:
             self.vwind10 = [timepts, weather['wspd']]
 
         return 
-    
+
     #=========================================================================
     # Extract new OperatingConditions instance with operating conditions at time "time_sec" relative to the simulation start
     def get_operating_conditions_at_time(self, time_sec, ignore = None):
@@ -105,7 +106,7 @@ class OperatingConditions:
                 ret = vals0 + (vals1-vals0) * (time_sec-times[i])/(times[i+1]-times[i])   
         return ret
 
-    
+
     #=========================================================================
     # Calculate sky temperature from specifications of ambient temperature and RH
     # The time resolution will be matched to that of Tamb (if a time-dependent Tamb is specified).  If not, the time resolution will be calculated based on 'duration' and 'step_sec'
@@ -125,7 +126,7 @@ class OperatingConditions:
         if len(timepts) == 1:
             self.Tambrad = self.Tambrad[1][0]
         return
-    
+
     #=========================================================================
     # Calculate clear-sky DNI
     # The time resolution will be matched to that for DNI variability (if a time-dependent DNI is specified).  If not, the time resolution will be calculated based on 'duration' and 'step_sec'
@@ -141,10 +142,10 @@ class OperatingConditions:
         if len(timepts) == 1:
             self.dni_clearsky = self.dni_clearsky[1][0]
         return    
-    
-    
-    
-    
+
+
+
+
     #=========================================================================
     # Get list of times points at which conditions change -> Used to calculate mass flow rates
     def get_time_points_at_change_in_conditions(self, is_clearsky = False):

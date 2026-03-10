@@ -5,15 +5,15 @@
 # Jacob Wenner
 # modified 2026-03-06, Kaleb Troyer
 
-import numpy as np
-import math
-import pandas as pd
-import scipy.interpolate
-from scipy.spatial import Delaunay
-import timeit
 import matplotlib.pyplot as plt
-from matplotlib import cm
+import scipy.interpolate
+import pandas as pd
+import numpy as np
+import timeit
+import math
 import os
+from scipy.spatial import Delaunay
+from matplotlib import cm
 from pathlib import Path
 
 import material_limits
@@ -48,18 +48,17 @@ class damageTool():
 
         ## determine where this script is running and see if there's a database for this material
         py_loc =Path(__file__).resolve()    # this line gets the current path's file string
-        potential_filestring = py_loc.parent / f'dmg_tool_data/{self.mat}_dmgMap_data_R{self.R:.2f}.csv'
+        potential_filestring = py_loc.parent/'dmg_tool_data'/f'{self.mat}_dmgMap_data_R{self.R:.2f}.csv'
         if os.path.exists(potential_filestring):
             self.file_string = potential_filestring
             print('NOTE: Damage tables provide LTE in years')
-        else:
-            print('no database found')
+        else: print('no database found')
 
         self.materialLimits = material_limits.materialLimits(self.mat)
-        self.interpolator   =None
-        self.df_LTE         =pd.DataFrame()
-        self.ctf            =None
-        self.interp_mode    =interp_mode    # sets the interpolation mode. Current options include: rbf (radial basis function) and LNDI (linear nd interpolator)
+        self.interpolator   = None
+        self.df_LTE         = pd.DataFrame()
+        self.ctf            = None
+        self.interp_mode    = interp_mode    # sets the interpolation mode. Current options include: rbf (radial basis function) and LNDI (linear nd interpolator)
 
     def plot_dmg_map(self,include_ratios=False, op_dTs=np.array([]), op_Tfs=np.array([]), LTEs=np.array([]), savename=None ):
         ## load dataframe
@@ -173,7 +172,7 @@ class damageTool():
             self.generate_RBF_interpolator()
         elif self.interp_mode == 'LNDI':
             self.generate_LNDI_interpolator()
-        
+
         return
 
     def load_lookup_table(self):
@@ -238,7 +237,7 @@ class damageTool():
 
         self.interpolator = interp_f # returns time in years
 
-    def make_contour_function_from_interpolator(self,LTE_desired=30, cutoff=None, show_LTE_ctr=False):
+    def make_contour_function_from_interpolator(self, LTE_desired=30, cutoff=None, show_LTE_ctr=False):
         """
         creates contour levels using the interpolator - this ensures that the desired and predicted LTE agree
         """
@@ -535,7 +534,7 @@ class damageTool():
         inds            =list(np.where(pmods == 0)[0])
         min_panel_LTEs  =np.array([])
         for i in range(Npanels):
-            if i < Npanels-1:                
+            if i < Npanels-1:
                 min_panel_LTE   =np.min(tube_min_LTEs.flatten()[inds[i]:inds[i+1]])
             else:
                 min_panel_LTE   =np.min(tube_min_LTEs.flatten()[inds[i]:])

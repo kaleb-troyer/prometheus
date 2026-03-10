@@ -358,4 +358,16 @@ def interp_Qs(model, sample_times, sample_DNIs):
 
     return Qfluids_samples, Qpumps_samples
 
+if __name__ =='__main__':
+
+    ## make receiver thermal models and unpack related inputs
+    ### setup all required thermal models
+    receiver_filestring = './wenner/Chapter_4/receivers/heuristic_receiver'
+    model_lite = therm_helpers.setup_LWT_thermal_model(filestring=receiver_filestring,ntubes_sim=1)
+    model_hvy  = therm_helpers.setup_LWT_thermal_model(filestring=receiver_filestring,ntubes_sim=3)
+
+    # flux_instance = sp_module.SP_Flux(filenames, use_sp_field=use_sp_field)
+
+
+
 # EOF

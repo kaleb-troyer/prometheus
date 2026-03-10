@@ -267,7 +267,7 @@ class materialLimits:
 if __name__ == "__main__":
     mat = materialLimits('A230')
     print('film temp is',mat.estimate_Tfilm(Tcrown=520,Tf=400,R=0.5) )
-    xPts, yPts = mat.getPlotPts(R=0.5)
+    xPts, yPts = mat.get_plot_pts(R=0.5)
 
     fig,ax=plt.subplots()
     ax.plot(xPts,yPts)

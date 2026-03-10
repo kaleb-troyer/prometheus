@@ -22,6 +22,7 @@ UNCATEGORIZED = {
 
 SYSTEM = {
     "min_turndown": 0.25,
+
     "pump_efficiency": 0.85,
     "cycle_efficiency": 0.412,
     "solar_resource": "USA CA Daggett (TMY2).csv",
