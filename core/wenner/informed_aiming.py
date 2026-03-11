@@ -15,8 +15,8 @@ import os
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 from matplotlib import cm
 
-import damage_tool
-import tube_jwenner
+import core.wenner.damage_tool as damage_tool
+import core.wenner.tube_jwenner as tube_jwenner
 
 def flux_from_Tf(dT_fun, Tfs, tube):
     """

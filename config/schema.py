@@ -1,10 +1,23 @@
-
-from dataclasses import dataclass
-
 # Maps the structure and contents of all input
 # parameters. If a parameter is included in inputs.py
 # but not in schema.py, it will not be delivered to
 # the program.
+# 2026-03-01
+# Kaleb Troyer
+
+from dataclasses import dataclass
+
+#----------------------#
+#----System  Schema----#
+#----------------------#
+
+@dataclass # Primary Class
+class System:
+    pump_efficiency: float
+    cycle_efficiency: float
+    solar_resource: str
+    hour_idx: float
+    des_dni: float
 
 #----------------------#
 #---Receiver  Schema---#
@@ -12,6 +25,7 @@ from dataclasses import dataclass
 
 @dataclass
 class ReceiverPanels:
+    number: int
     length: float
     height: float
 
@@ -56,8 +70,7 @@ class Receiver:
     start_pt: str
     npaths: int
     ncross: int
-    sig_lim_x: int
-    sig_lim_y: int
+    ntubes_sim: int
     is_bottom_inlet: bool
     use_aiming_scheme: bool
     use_sp_flux: bool
@@ -69,8 +82,7 @@ class Receiver:
     offset_x: float
     offset_y: float
     offset_z: float
-    aim_rows: int
-    aim_cols: int
+    aim_marg: float
 
     # substructures
     panel: ReceiverPanels
@@ -118,5 +130,9 @@ class Plot:
 class Optimizer:
     f_og: float
     max_iter: int
+    sig_lim_x: int
+    sig_lim_y: int
+    aim_rows: int
+    aim_cols: int
 
 # EOF

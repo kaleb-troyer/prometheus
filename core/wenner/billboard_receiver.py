@@ -9,11 +9,11 @@ import json
 from math import pi, sin, floor
 from copy import deepcopy
 
-import operating_conditions
-import materials
-import settings
-import util
-import tube_jwenner as tube
+import core.wenner.operating_conditions as operating_conditions
+import core.wenner.materials as materials
+import core.wenner.settings as settings
+import core.wenner.util as util
+import core.wenner.tube_jwenner as tube
 
 class BillboardReceiver:
     def __init__(self):

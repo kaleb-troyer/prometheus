@@ -159,7 +159,7 @@ if __name__ =='__main__': # very important if multiprocessing. Prevents subproce
     W_panel         = model_lite.D/model_lite.Npanels # for now, the width is determined by the number of panels, which is set so that the velocity matches the reference velocity of the prelim study
     L_t             = model_lite.tubes[0][0].length
     flowpath_config = f'{model_lite.npaths}_{model_lite.start_pt}'
-    rec_flux_dict, Q_inc_rec, Areas, A_req =informed_aiming.generate_ideal_fluxmap(dmg_inst, tube, LTE_desired, mflow, W_panel, L_t, flowpath_config)
+    rec_flux_dict, Q_inc_rec, Areas, A_req = informed_aiming.generate_ideal_fluxmap(dmg_inst, tube, LTE_desired, mflow, W_panel, L_t, flowpath_config)
 
     # plot and save json of what the ideal fluxmap looks like
     filestring_fluxmap =f"./wenner/Chapter_4/case_inputs/{casename}/{casename}_3D_heuristic_dev_fluxmap.json"
@@ -174,7 +174,11 @@ if __name__ =='__main__': # very important if multiprocessing. Prevents subproce
         N_panels_half  = len(rec_flux_dict.keys())
         N_panels_ideal = N_panels_half*2
 
-    ideal_flux_grid =informed_aiming.build_ideal_fluxgrid(filestring_fluxmap,res_y=model_lite.Npanels, H=L_t, W=W_panel*N_panels_ideal, flowpath_config=flowpath_config)
+    ideal_flux_grid = informed_aiming.build_ideal_fluxgrid(
+        filestring_fluxmap,
+        res_y=model_lite.Npanels, H=L_t, W=W_panel*N_panels_ideal, 
+        flowpath_config=flowpath_config
+    )
 
     if N_panels_ideal != np.round(model_lite.D/W_panel):
         print('Error! The minimum panel number for receiver @ this height differs from that in receiver object. adapting to match thermal model')
@@ -195,7 +199,7 @@ if __name__ =='__main__': # very important if multiprocessing. Prevents subproce
     flux_profile    =np.zeros(ideal_flux_grid.shape)
 
     # initialize model solve for deep copies
-    dummy_uniform_flux_grid =therm_helpers.increase_flux_resolution_blocked(flux_low_res = 200*np.ones(flux_profile.shape), ndim_new = HALOS_res)
+    dummy_uniform_flux_grid = therm_helpers.increase_flux_resolution_blocked(flux_low_res = 200*np.ones(flux_profile.shape), ndim_new = HALOS_res)
     therm_helpers.solve_LWT_thermal_model(model_lite,dummy_uniform_flux_grid)
     _, Tfs_dummy, _, _              =therm_helpers.get_thermal_results(model_lite)
 
@@ -394,9 +398,9 @@ if __name__ =='__main__': # very important if multiprocessing. Prevents subproce
                         adj_thermal_clone           =copy.deepcopy(model_lite_checkin_clone)    # the model can be intiialized with the current flux profile
                         flux_profile_option_adj_kW  =therm_helpers.increase_flux_resolution_blocked(flux_low_res = flux_profile_option_adj_kW, ndim_new = HALOS_res)
                         therm_helpers.solve_LWT_thermal_model(adj_thermal_clone,flux_profile_option_adj_kW)
-                        dTs_adj, Tfs_adj, qabs_adj, Rs_adj      =therm_helpers.get_thermal_results(adj_thermal_clone)
-                        LTEs_adj                                =dmg_inst.get_LTEs_w_penalties(dTs_adj.flatten(),Tfs_adj.flatten(),Rs_adj.flatten())
-                        min_panel_LTEs_adj, min_tube_LTEs_adj   =dmg_inst.calc_minimum_panel_LTEs(adj_thermal_clone, LTEs_adj)
+                        dTs_adj, Tfs_adj, qabs_adj, Rs_adj    = therm_helpers.get_thermal_results(adj_thermal_clone)
+                        LTEs_adj                              = dmg_inst.get_LTEs_w_penalties(dTs_adj.flatten(),Tfs_adj.flatten(),Rs_adj.flatten())
+                        min_panel_LTEs_adj, min_tube_LTEs_adj = dmg_inst.calc_minimum_panel_LTEs(adj_thermal_clone, LTEs_adj)
                         # LTEs_options[i_y,i_x] = np.average(min_panel_LTEs_alt_opt)  #  mean panel lifetime method
                         # LTEs_options[i_y,i_x] = np.sqrt(np.mean((min_panel_LTEs_alt_opt - LTE_trigger)**2)) # min RMSE method
                         # LTE_option              =  LTE_rsme = np.sqrt(np.mean((LTEs - LTE_rmse)**2)) # total RMSE method

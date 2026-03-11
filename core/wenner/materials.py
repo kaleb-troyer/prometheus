@@ -1,6 +1,7 @@
 # <desc>
 # 2025-XX-XX
 # Jacob Wenner
+# modifed 2026-03-11, Kaleb Troyer
 
 import numpy as np
 import numpy.polynomial.polynomial as nppoly
@@ -20,14 +21,26 @@ def create_material(name, props = None):
         return Sodium()
     elif name == 'Air':
         return Air()
-    elif name == 'SS316':
+    elif name == 'SS316' or name == '316H':
         return SS316()
-    elif name == 'Haynes230':
+    elif name == 'Haynes230' or name == 'A230':
         return Haynes230()
-    elif name == 'Inconel740H':
+    elif name == 'Inconel740H' or name == '740H':
         return Inconel740H()
     elif name == 'Inconel600':
         return Inconel600()
+    elif name == 'Inconel617' or name == 'A617':
+        print(f"WARNING: tube material {name} not available for tube model, using Inconel600.")
+        print(f"To add a new material, see core.wenner.materials.")
+        return Inconel600()
+    elif name == 'Inconel800H' or name == '800H':
+        print(f"WARNING: tube material {name} not available for tube model, using Inconel740H.")
+        print(f"To add a new material, see core.wenner.materials.")
+        return Inconel740H()
+    elif name == 'Haynes282' or name == 'A282':
+        print(f"WARNING: tube material {name} not available for tube model, using Haynes230.")
+        print(f"To add a new material, see core.wenner.materials.")
+        return Haynes230()
     elif name == 'GenericConstantProp':
         return GenericMaterial(props)
     else:

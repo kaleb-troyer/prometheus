@@ -5,8 +5,8 @@
 # Kaleb Troyer
 
 from dataclasses import is_dataclass, fields
-from schema import *
-from inputs import *
+from config.schema import *
+from config.inputs import *
 
 def load(cls, data: dict):
     """
@@ -15,6 +15,9 @@ def load(cls, data: dict):
     """
     if not is_dataclass(cls):
         return data
+
+    extras = set(data.keys()) - {f.name for f in fields(cls)}
+    if extras: print(f"Unexpected keys {extras} for dataclass {cls.__name__}")
 
     kwargs = {}
     for f in fields(cls):

@@ -5,13 +5,13 @@
 
 import numpy as np
 
-import tube_view_factors
-import materials
-import radiosity
-import operating_conditions
-import settings
-import cross_section
-import elastic_stress
+import core.wenner.tube_view_factors as tube_view_factors
+import core.wenner.materials as materials
+import core.wenner.radiosity as radiosity
+import core.wenner.operating_conditions as operating_conditions
+import core.wenner.settings as settings
+import core.wenner.cross_section as cross_section
+import core.wenner.elastic_stress as elastic_stress
 
 def solve_tube_time_point(inputs):
     tube = inputs[0]
@@ -38,7 +38,7 @@ class Tube:
         self.twall = 0.0012         # Tube wall thickness
         self.roughness = 4.6e-5     # Tube wall roughness (m)
         self.tube_bends_90 = 0      # Number of 90 degree bends per tube (assumed to occur on each end)
-        self.tube_bends_45 = 0      # Number of 45 degree bends per tube  (assumed to occur on each end)   
+        self.tube_bends_45 = 0      # Number of 45 degree bends per tube  (assumed to occur on each end)
         self.length = 1.0           # Tube length (m)
         self.mflow = float('nan')   # Tube mass flow (kg/s)
 
@@ -49,8 +49,8 @@ class Tube:
         #--- Heat transfer parameters and conditions
         self.is_solar = True                         # Exposed to solar radiation
         self.solar_abs = 0.94                        # Tube solar absorptivity
-        self.emis = 0.88                             # Tube IR emissivity   
-        self.hext = 10.0                             # External heat loss coefficient  
+        self.emis = 0.88                             # Tube IR emissivity
+        self.hext = 10.0                             # External heat loss coefficient
 
         self.flux_dist = 'cosine' # changed 1/29/2025 was 'cosine'
         self.hext_dist = 'step'

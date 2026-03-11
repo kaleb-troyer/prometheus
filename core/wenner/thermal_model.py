@@ -11,10 +11,10 @@ import json
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 from scipy.optimize import curve_fit
 
-import billboard_receiver
-import materials
-import settings
-import util
+import core.wenner.billboard_receiver as billboard_receiver
+import core.wenner.materials as materials
+import core.wenner.settings as settings
+import core.wenner.util as util
 
 def np_to_json(vars, vals, filename):
     """
@@ -38,14 +38,14 @@ def json_to_np(filename,var):
         dict=json.load(f)
     return np.array(dict[var])
 
-def increase_flux_resolution_blocked(flux_low_res,ndim_new):
+def increase_flux_resolution_blocked(flux_low_res, ndim_new):
     """
     take in a low resolution flux, repeat the values to a higher resolution
-    flux_low_res    - (kW/m2) square array of flux values, likely from SolarPILOT
-    new_ndim        - 
+    flux_low_res - (kW/m2) square array of flux values, likely from SolarPILOT
+    new_ndim     -
     ---
     returns:
-    flux_high_res   - (kW/m2) block-increased array of flux values for thermal model
+    flux_high_res - (kW/m2) block-increased array of flux values for thermal model
     """
     ndim_og = flux_low_res.shape[0]
     ndim_ogB= flux_low_res.shape[1] 
@@ -357,17 +357,5 @@ def interp_Qs(model, sample_times, sample_DNIs):
     Qpumps_samples[Qfluids_samples < 1] =0
 
     return Qfluids_samples, Qpumps_samples
-
-if __name__ =='__main__':
-
-    ## make receiver thermal models and unpack related inputs
-    ### setup all required thermal models
-    receiver_filestring = './wenner/Chapter_4/receivers/heuristic_receiver'
-    model_lite = therm_helpers.setup_LWT_thermal_model(filestring=receiver_filestring,ntubes_sim=1)
-    model_hvy  = therm_helpers.setup_LWT_thermal_model(filestring=receiver_filestring,ntubes_sim=3)
-
-    # flux_instance = sp_module.SP_Flux(filenames, use_sp_field=use_sp_field)
-
-
 
 # EOF

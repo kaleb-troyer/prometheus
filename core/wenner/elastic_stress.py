@@ -3,7 +3,7 @@
 # Jacob Wenner
 
 import numpy as np
-import materials
+import core.wenner.materials as materials
 
 # ELASTIC STRESS CALCULATIONS
 

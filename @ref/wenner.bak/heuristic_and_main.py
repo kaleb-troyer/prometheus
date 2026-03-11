@@ -28,14 +28,6 @@ import json
 import multiprocessing
 import copy
 
-# what information do I need out of this?
-# - [ ] let that define the class functions
-# - [ ] 
-
-input_par = {
-
-}
-
 def flux_to_LTE_w_MP(kwarg):
     """
     single function that invokes all the steps necessary to estimate the panel lifetimes

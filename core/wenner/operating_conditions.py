@@ -4,7 +4,7 @@
 
 import numpy as np
 
-import util
+import core.wenner.util as util
 
 class OperatingConditions:
     def __init__(self):
