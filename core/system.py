@@ -110,10 +110,15 @@ class Parameters():
 class Case():
 
     # tasks
-    # - instantiate the thermal model from user inputs
-    # - generate a field from user inputs
-    # - generate a set of flux images from inputs
-    # - identify case-driving inputs
+    # - [x] instantiate the thermal model from user inputs
+    # - [ ] generate a field from user inputs
+    # - [ ] dynamically assign receiver as flat plate or cylindrical
+    # - [ ] create and assign vars rec.type and rec.layout for billboard_receiver.py model
+    # - [ ] generate a set of flux images from inputs
+    # - [ ] identify case-driving inputs
+    # - [ ] generate hash ONLY from schema vars
+    # - [ ] light hash databasing
+    # - [ ] review and incorporate Akshay's optimization
 
     # order of operations
     # - store hash/case information in db
@@ -122,12 +127,16 @@ class Case():
 
     def __init__(self, par: Parameters):
 
+        # these are shared references, not copies
         self.sys = par.sys
         self.rec = par.rec
         self.hel = par.hel
         self.hash = par.hash
 
-        # instantiate the damage tool using design parameters
+        # The damage tool's primary purpose is to provide life-
+        # time estimates using the products of the thermal tool,
+        # namely fluid temperatures, temperature differences,
+        # and the ratio of conductance to convective heat transfer.
         self.dmg = dt.damageTool(self.rec.tube.material)
 
         # The tube model provides material property functions
@@ -147,11 +156,17 @@ class Case():
         self.tube.tube_bends_90 = self.rec.tube.bend90
         self.tube.initialize()
 
-        # # instantiate the thermal model using design parameters
-        # self.thermal_model = tm.setup_LWT_thermal_model(
-        #     filestring = receiver_filestring, # !!!! edit function to work with design parameters
-        #     ntubes_sim = self.rec.ntubes_sim
-        # )
+        # The thermal model solves for receiver tube and thermal
+        # carrier temperatures (including heat transfer coeffs.),
+        # given a flux profile and many design parameters.
+
+        # !!! TEMPORARY VARIABLE BYPASS !!!
+        self.rec.type = "temp none"
+        self.rec.layout = "temp none"
+
+        self.thermal_model = tm.setup_LWT_thermal_model_troyer(
+            self.sys, self.rec, self.hel
+        )
 
     def copy(self):
         return deepcopy(self)

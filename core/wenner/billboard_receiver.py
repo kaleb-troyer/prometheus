@@ -1,3 +1,8 @@
+# Original author unknown, perhaps an NREL model. No description provided
+# by Jacob's code. --Kaleb Troyer
+# 2025-XX-XX
+# Jacob Wenner
+# modified 2026-03-12, Kaleb Troyer
 
 import scipy.interpolate as spInt
 import scipy.optimize as scOpt
@@ -62,7 +67,7 @@ class BillboardReceiver:
 
         #--- Operational parameters
         self.flow_control_mode = 0       # Receiver mass flow contol: 0 = separate mass flow per path such that each path achieves the target exit temperature, 
-                                         #                            1 = uniform flow per path. Total flow = sum(m1, m2, ..., mN) where m1, m2, etc. are the mass flow rates required to hit the exit temperature in path1, path2, etc. 
+#                            1 = uniform flow per path. Total flow = sum(m1, m2, ..., mN) where m1, m2, etc. are the mass flow rates required to hit the exit temperature in path1, path2, etc. 
                                          #                            2 = uniform flow per path. Total flow = # paths * max(m1, m2, ... mN) where m1, m2, etc. are the mass flow rates required to hit the exit temperature in path1, path2, etc. 
         self.min_turndown = 0.20         # Min turndown fraction
         self.pump_efficiency = 0.85      # Pump efficiency
@@ -199,6 +204,60 @@ class BillboardReceiver:
             params = json.load(f)
         for key,val in params.items():
             setattr(self,key,val)
+        self.initialize()
+        return
+
+    #=========================================================================
+    def load_from_par(self, sys, rec, hel):
+
+        self.Qdes = rec.W_dot_net
+        self.H = rec.height
+        self.D = rec.length
+        self.Htower = rec.htower
+        self.Npanels = rec.panel.number
+        self.tube_OD = rec.tube.OD
+        self.tube_twall = rec.tube.tw
+        self.tube_bends_90 = rec.tube.bend90
+        self.tube_bends_45 = rec.tube.bend45
+        self.target_flux_max = rec.fluxmax
+
+        self.helio_height = hel.height
+        self.tube_material_name = rec.tube.material
+        self.HTF_material_name = rec.htf_mat
+        self.Tfin_design = rec.T_htf_i + 273.15
+        self.Tfout_design = rec.T_htf_o + 273.15
+        self.solar_abs = rec.sol_abs
+        self.emis = rec.emissivity
+        self.m_comb = rec.m_comb
+        self.est_heat_loss = rec.heat_loss
+
+        self.min_turndown = sys.min_turndown
+        self.pump_efficiency = sys.pump_efficiency
+        self.expected_cycle_eff = sys.cycle_efficiency
+        self.user_flow_paths = 0
+        self.npaths = rec.npaths
+        self.ncross = rec.ncross
+        self.is_cross_to_high = 0
+        self.is_min_before_cross = 0
+        self.is_skip_panels = 0
+        self.is_bottom_inlet = 0
+
+        self.rec_type = rec.type
+        self.layout_file = rec.layout
+        self.aiming_file = None
+        self.hel_disable_file = None
+        self.aiming_file2 = None
+
+        self.solar_resource_file = sys.solar_resource
+        self.start_pt = rec.start_pt
+        self.vel_ref = 3.298 # NOTE unused if modify_Npanels is false (hardcoded)
+        self.modify_Npanels = 0 # NOTE hard-coded as false in Jacob's code
+        self.use_aiming_scheme = 0 # NOTE hard-coded as false in Jacob's code
+        self.err_reflect_x = hel.err_refl_x # !!! looks to be unused
+        self.err_reflect_y = hel.err_refl_y # !!! looks to be unused
+        self.err_surface_x = hel.err_surf_x # !!! looks to be unused
+        self.err_surface_y = hel.err_surf_y # !!! looks to be unused
+
         self.initialize()
         return
 

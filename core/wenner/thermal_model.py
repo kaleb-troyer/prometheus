@@ -2,6 +2,7 @@
 # thermal models, which only solves the receiver for one flux profile.
 # 2025-07-11
 # Jacob Wenner
+# modified 2026-03-12, Kaleb Troyer
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -357,5 +358,52 @@ def interp_Qs(model, sample_times, sample_DNIs):
     Qpumps_samples[Qfluids_samples < 1] =0
 
     return Qfluids_samples, Qpumps_samples
+
+def setup_LWT_thermal_model_troyer(sys, rec, hel):
+    """
+    sets up a lightweight NREL model based on Parameters dataclasses and some other assumptions
+    ---
+    sys - dataclass of system parameters (according to config.schema)
+    rec - dataclass of receiver parameters (according to config.schema)
+    hel - dataclass of heliostat parameters (according to config.schema)
+    """
+    ### set up numerical resolution for flux and model
+    nr = 2      # was 5
+    ntheta = 79 # was 79
+    nz = 50     # was 50
+
+    ### instantiate a receiver object
+    receiver = billboard_receiver.BillboardReceiver()     # make a receiver object
+    receiver.load_from_par(sys, rec, hel)    # set the receiver inputs using json
+
+    # manually set operating conditions for timepoint
+    receiver.operating_conditions.hour_offset = 0
+    mDot_total=(receiver.Qdes*1e6)/receiver.HTFcpavg/(receiver.Tfout_design-receiver.Tfin_design)
+    mass_flow=[mDot_total/receiver.npaths for path in range(receiver.npaths)]
+    receiver.operating_conditions.mass_flow = mass_flow
+    receiver.operating_conditions.vwind10 = sys.vwind10 # (m/s) set windspeed to be zero
+    receiver.operating_conditions.rh = sys.rel_hum      # relative humidity
+    receiver.operating_conditions.Tamb = sys.t_amb + 273.15 # (K)  ambient temperature
+
+    receiver.operating_conditions.Tambrad = util.calculate_sky_temperature(receiver.operating_conditions.Tamb, receiver.operating_conditions.rh, receiver.operating_conditions.hour_offset)
+    receiver.operating_conditions.Tfin = receiver.Tfin_design
+
+    # settings
+    #--- Update numerical solution options as desired (all inputs have default values defined in the CylindricalReceiver class)
+    receiver.disc = settings.Discretization(nr, ntheta, nz)   # number of r, theta, z nodes 
+    dimensions = '1D'
+    receiver.options.wall_detail = dimensions
+    receiver.options.calculate_stress = False         # Calculate elastic thermal stress distributions?
+    receiver.flow_control_mode = 0                    # 0 = Control each path independently
+    receiver.ntubesim = rec.ntubesim
+    receiver.options.use_full_rad_exchange = True
+
+    receiver.initialize()
+    ##--- update tube inputs to reduce solution time. Introduces average of 2.5% error in lifetime according to run_ideal_and_uniform_cases
+    new_settings = {'crosswall_avg_k':True, 'use_full_rad_exchange': receiver.options.use_full_rad_exchange, 'wall_detail': dimensions}
+    receiver.update_tube_inputs(new_settings) # 
+
+    return receiver
+
 
 # EOF

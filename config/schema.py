@@ -13,11 +13,15 @@ from dataclasses import dataclass
 
 @dataclass # Primary Class
 class System:
+    min_turndown: float
     pump_efficiency: float
     cycle_efficiency: float
     solar_resource: str
     hour_idx: float
     des_dni: float
+    rel_hum: float
+    vwind10: float
+    t_amb: float
 
 #----------------------#
 #---Receiver  Schema---#
@@ -46,6 +50,7 @@ class ReceiverTube:
     bend90: float
     bend45: float
     material: str
+    roughness: float
 
     # substructures
     options: TubeOptions
@@ -67,16 +72,17 @@ class Receiver:
     sol_abs: float
     emissivity: float
     heat_loss: float
+    m_comb: float
     start_pt: str
     npaths: int
     ncross: int
-    ntubes_sim: int
-    is_bottom_inlet: bool
-    use_aiming_scheme: bool
+    ntubesim: int
     use_sp_flux: bool
-    is_cross_too_high: bool
-    is_min_before_cross: bool
-    is_skip_panels: bool
+    # is_bottom_inlet: bool
+    # use_aiming_scheme: bool
+    # is_cross_too_high: bool
+    # is_min_before_cross: bool
+    # is_skip_panels: bool
     zenith: float
     azimuth: float
     offset_x: float

@@ -3,37 +3,40 @@
 # validated by schema.py, and parsed by loader.py.
 # 2026-03-01
 # Kaleb Troyer
-#
-#  NOTE: Many variables are inherited from Janna's original thermal model
-#        and are defined under "receiver.py" and "tube.py". These still
-#        need to be properly transfered from `inputs.py` to the model.
 
 UNCATEGORIZED = {
-    "vel_ref": 3.298, # [m/s] deprecated artifact variable for automatically setting number of receiver panels to meet a design velocity
     "n_circulation": 0, # [?] ???
-    "m_comb": 3.2, # [?] possibly a variable of Janna's receiver thermal model
-
-    # unused / repeat variables
-    "flow_paths": 2,  # [-] duplicate variable of Janna's npaths
-    "dresize": False, # [bool] triggers a resizing of the receiver in Janna's model if flux is too high
     "sec_num": 7,     # [-] HALOS parameter IF you want it to optimize aimpoints (Jacob's code avoids this)
     "sec_method": "angle", # [-] HALOS parameter for splitting field into subfields to accelerate optimization
+
+    # unused / repeat variables
+    "vel_ref": 3.298, # (?!) [m/s] deprecated artifact variable for automatically setting number of receiver panels to meet a design velocity
+    "flow_paths": 2,  # (?!) [-] duplicate variable of Janna's npaths
+    "dresize": False, # (?!) [bool] triggers a resizing of the receiver in Janna's model if flux is too high
+    "is_bottom_inlet":   False, # (?!) [bool] does the htf enter from the bottom of the receiver?
+    "use_aiming_scheme": False, # (?!) [bool] directs the thermal model to calculate flux profile through copylot simulation. if false, profile is uniform
+    "is_cross_too_high": False, # (?!) [bool] cross receiver flow paths from low to high flux sides to balance energy transfer in thermal model
+    "is_min_before_cross": False,#(?!) [?] ???
+    "is_skip_panels":    False, # (?!) [?] ???
 }
 
 SYSTEM = {
-    # "min_turndown": 0.25,
-    "pump_efficiency": 0.85,    # (?) [-]
-    "cycle_efficiency": 0.412,  # (?) [-]
+    "min_turndown": 0.25,       # [-] Min turdown fraction (most description given by Receiver model)
+    "pump_efficiency": 0.85,    # [-] Thermal carrier pump efficiency
+    "cycle_efficiency": 0.412,  # [-] Expected power cycle efficiency
     "solar_resource": "USA CA Daggett (TMY2).csv",
     "hour_idx": 4090, # [hour] hour of the meteorogical year to consider weather and solar position
-    "des_dni": 950,
+    "des_dni":  950,  # [W/m2] direct normal irradiance at design point
+    "t_amb":    25,   # [C] ambient temperature at design point
+    "rel_hum":  25,   # [%] relative humidity at design point
+    "vwind10":  0,    # [m/s] wind speed at design point (values > 0 are untested)
 }
 
 RECEIVER = {
     # Power and temperature requirements
     "W_dot_net": 175,  # [MWt] net power absorbed by the receiver
     "T_htf_i":   290,  # [C] heat transfer fluid inlet temperature
-    "T_htf_o":   563,  # [C] heat transfer fluid outlet temperature
+    "T_htf_o":   565,  # [C] heat transfer fluid outlet temperature
     "fluxmax":   1000, # [kW/m2] target maximum flux on the receiver
     "flux_ub":   600,  # (?) [kW/m2] upper limit on incident receiver flux
     "flux_lb":   0,    # (?) [kW/m2] lower limit on incident receiver flux
@@ -43,10 +46,11 @@ RECEIVER = {
     "sol_abs":    0.96,  # [-] receiver solar absorptivity
     "emissivity": 0.87,  # [-] receiver total emissivity
     "heat_loss":  30,    # [kW/m2] estimated receiver heat loss by area
+    "m_comb":     3.2,   # [-] coefficient for combining natural and forced convection
     "start_pt":   "ctr", # [-] receiver flow path starting point (e.g. ctr is for center, top of flat plate receiver)
     "npaths":     2,     # [-] number of parallel flow paths in the receiver (typically 2)
     "ncross":     0,     # [-] count of times a flow path crosses from one side of the receiver to the other
-    "ntubes_sim": 1,     # [-] number of tubes to simulate in the thermal model, typically 1 or 3
+    "ntubesim":   1,     # [-] number of tubes to simulate in the thermal model, typically 1 or 3
 
     # Receiver aiming parameters
     "aim_marg":   0.5,  # [m] distance from the aiming edge to the edge of the receiver
@@ -65,11 +69,6 @@ RECEIVER = {
     # Receiver configuration options
     "use_sp_field":      False, # (?) [bool] use SolarPILOT-generated field instead of internal layout
     "use_sp_flux":       True,  # (?) [bool] use SolarPILOT-generated flux profile instead of aimpoint flux profile
-    "is_bottom_inlet":   False, # [bool] does the htf enter from the bottom of the receiver?
-    "use_aiming_scheme": False, # (?) [bool] directs the thermal model to calculate flux profile through copylot simulation. if false, profile is uniform
-    "is_cross_too_high": False, # (?) [bool] cross receiver flow paths from low to high flux sides to balance energy transfer in thermal model
-    "is_min_before_cross": False, # (?) [?] ???
-    "is_skip_panels":    False, # (?) [?] ???
 
     # Panel-level geometry
     "panel": {
@@ -84,7 +83,8 @@ RECEIVER = {
         "tw": 0.00125,  # [m] wall thickness
         "bend45": 0,    # (?) [-] number of 45 degree bends simulated per tube (assumed to be at the tube ends)
         "bend90": 4,    # (?) [-] number of 90 degree bends simulated per tube (assumed to be at the tube ends)
-        "material": "A230", # [-] tube wall material
+        "material": "A230",  # [-] tube wall material
+        "roughness": 4.6e-5, # [m] tube wall roughness
 
         "options": {
             # Prevents initialization error when tubes are not adjacent
@@ -112,10 +112,10 @@ HELIOSTATS = {
     "method":     "SimpleNormalFluxCalc", # [-] solarpilot flux calculation strategy (see 'help' page in SolarPILOT)
 
     # Reflectivity and surface error parameters
-    "err_refl_x": 2e-4, # [?] heliostat reflectivity error in x (see solarpilot documentation)
-    "err_refl_y": 2e-4, # [?] heliostat reflectivity error in y
-    "err_surf_x": 2e-4, # [?] heliostat surface error in x (see solarpilot documentation)
-    "err_surf_y": 2e-4, # [?] heliostat surface error in y
+    "err_refl_x": 2e-4,    # (?) [?] heliostat reflectivity error in x (see solarpilot documentation)
+    "err_refl_y": 2e-4,    # (?) [?] heliostat reflectivity error in y
+    "err_surf_x": 1.53e-3, # (?) [?] heliostat surface error in x (see solarpilot documentation)
+    "err_surf_y": 1.53e-3, # (?) [?] heliostat surface error in y
 
     # Flux image modifying parameters
     "img": {
