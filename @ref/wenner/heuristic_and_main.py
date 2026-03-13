@@ -196,12 +196,14 @@ if __name__ =='__main__': # very important if multiprocessing. Prevents subproce
     )
 
     # pre-allocate flux profile array
-    flux_profile    =np.zeros(ideal_flux_grid.shape)
+    flux_profile = np.zeros(ideal_flux_grid.shape)
 
     # initialize model solve for deep copies
-    dummy_uniform_flux_grid = therm_helpers.increase_flux_resolution_blocked(flux_low_res = 200*np.ones(flux_profile.shape), ndim_new = HALOS_res)
+    dummy_uniform_flux_grid = therm_helpers.increase_flux_resolution_blocked(
+        flux_low_res = 200*np.ones(flux_profile.shape), ndim_new = HALOS_res
+    )
     therm_helpers.solve_LWT_thermal_model(model_lite,dummy_uniform_flux_grid)
-    _, Tfs_dummy, _, _              =therm_helpers.get_thermal_results(model_lite)
+    _, Tfs_dummy, _, _ = therm_helpers.get_thermal_results(model_lite)
 
     ## this 'if nest' is a model check and initialization
     if not model_lite.tubes[0][0].flow_against_gravity: # assuming symmetry. If the left most panel is flowing w gravity then both outlet temps are at bottom of first/last array column
@@ -375,7 +377,7 @@ if __name__ =='__main__': # very important if multiprocessing. Prevents subproce
                 max_dy      =coord_list[max_index][0]
                 max_dx      =coord_list[max_index][1]
 
-                y_move  =y_ind_top+max_dy  
+                y_move  =y_ind_top+max_dy
                 x_move  =x_ind_left+max_dx
 
                 x_search_range =[x_move-1, x_move+1]

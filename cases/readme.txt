@@ -4,8 +4,8 @@ hash is generated using the relevant parameters and then
 the directory is named using the hash. A database (either
 SQL or a plain .csv file) will match case to folder.
 
-└── #########
-    └── results
+└── #########/
+    └── results/
 
 This folder will house the solar field layout and flux images
 for each heliostat on the receiver. The results folder holds

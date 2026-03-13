@@ -73,8 +73,6 @@ RECEIVER = {
     # Panel-level geometry
     "panel": {
         "number": 18,   # [-] total count of panels that make up the receiver
-        "length": None, # (?) [m] horizontal length of a single panel
-        "height": None, # (?) [m] vertical height of a single panel
     },
 
     # Tube geometry and options

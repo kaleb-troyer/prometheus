@@ -639,6 +639,7 @@ def plot_ideal_fluxgrid(fluxgrid, H, W, flow_config, savefig=False, display=Fals
         if savefig:
             plt.savefig(os.path.join(path, file), dpi=300)
         if display: plt.show()
+        plt.close()
     else:
         print('flow configuration not recognized')
     return

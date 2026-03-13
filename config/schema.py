@@ -30,8 +30,6 @@ class System:
 @dataclass
 class ReceiverPanels:
     number: int
-    length: float
-    height: float
 
 @dataclass
 class ReceiverLTE:

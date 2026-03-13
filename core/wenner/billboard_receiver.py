@@ -134,7 +134,7 @@ class BillboardReceiver:
         self.soln_time = 60         # Solution time (seconds)
         self.initial_condition = 'steady_state'  # 'steady_state' = steady state at first set of operating condition in trans_operating_conditions,                           
                                                  # 'constant' = Constant fluid and wall T
-        self.initial_constant_Tf = float('nan')   # Constant fluid T to use if initial_condition = 'constant'
+        self.initial_constant_Tf = float('nan')  # Constant fluid T to use if initial_condition = 'constant'
         self.initial_constant_Tw = float('nan')  # Constant wall T to use if initial_condition = 'constant'        
 
         #--- Tubes
@@ -242,8 +242,8 @@ class BillboardReceiver:
         self.is_skip_panels = 0
         self.is_bottom_inlet = 0
 
-        self.rec_type = rec.type
-        self.layout_file = rec.layout
+        self.rec_type = rec.type # appears unused by Jacob's code
+        self.layout_file = None  # appears unused by Jacob's code
         self.aiming_file = None
         self.hel_disable_file = None
         self.aiming_file2 = None
@@ -1033,7 +1033,7 @@ class BillboardReceiver:
 
 # ------------------------- interpolate tube flux. Different from o.g. in that it does not place two adjacent xtubes at the same x position. They are now offset by half a tube width in either direction
     def calculate_tube_flux_jwenner(self, rec_flux_dist):
-        
+
         #--- Interpolate to axial resolution in self.disc.nz
         nz, nx = rec_flux_dist.shape
         zpts = np.arange(0.5/nz, 1.0, 1./nz)               # Axial points at flux profile resolution (SolarPILOT points are at interval centroids)
@@ -1041,7 +1041,7 @@ class BillboardReceiver:
         inc_flux_interp = np.zeros((self.disc.nz, nx)) 
         for z in range(self.disc.nz):
             inc_flux_interp[z,:] = util.interpolate1D(zpts_tube[z], zpts, rec_flux_dist) 
-             
+
         #--- Calculate x-positions at tube locations, but add a gap between edge tubes of two adjacent panels
         ntubes_total = self.ntubes_per_panel*self.Npanels
         gap = 1/ntubes_total # create a gap that is 1/ntubes_total fraction wide
@@ -1051,7 +1051,7 @@ class BillboardReceiver:
         xperpan = np.linspace(gap, dxpan-gap, self.ntubesim)
         for j in range(self.Npanels):
             xpts[j,:] = (j+0.5)*dxpan if self.ntubesim == 1 else j*dxpan + xperpan    # Tube x-positions
-        
+
         #--- Interpolate flux profiles to tube positions at receiver circumference
         qinc = np.zeros((self.disc.nz, self.Npanels, self.ntubesim))
         dx = 1./float(nx)
@@ -1060,14 +1060,14 @@ class BillboardReceiver:
                 if xpts[j,k] < 0.5*dx:  # x-coordinate below first x-point in array (south side of receiver) -> interpolate using last point in array
                     qinc[:,j,k] = inc_flux_interp[:,0]
                     ## my receiver is flat so i just use the first value
-                elif xpts[j,k] > 1.0 - 0.5*dx:   # x-coordinate below first x-point in array -> interpolate using last point in array
+                elif xpts[j,k] > 1.0 - 1.5*dx:   # x-coordinate below first x-point in array -> interpolate using last point in array
                     qinc[:,j,k] = inc_flux_interp[:,-1]
                     ## my receiver is flat so I just use the last value
                 else:
                     i1 = int(floor((xpts[j,k]-0.5*dx)/dx))
                     qinc[:,j,k] = inc_flux_interp[:,i1] + (inc_flux_interp[:,i1+1]-inc_flux_interp[:,i1])/dx * (xpts[j,k] - (i1+0.5)*dx)
         return qinc
-    
+
     # Set operating_conditions.inc_flux in each tube instance based on the receiver flux distribution currently in self.operating_conditions
     def set_tube_flux(self, verbose = False):
         rec_flux_dist = self.operating_conditions.inc_flux  # Receiver flux distribution
@@ -1091,11 +1091,10 @@ class BillboardReceiver:
         return
 
 
-    
     #=========================================================================
     # Combine results per tube into receiver total, total per panel, or total per path
     def calculate_aggregate_results(self, name, is_per_path = False, is_per_panel = False, time_index = None):
-        
+
         # Solutions for tubes
         tube_solns = self.get_tube_solns(name, 'avg', time_index = time_index)
         if is_per_panel:
@@ -1117,7 +1116,7 @@ class BillboardReceiver:
                         else:
                             total += val
         return total
-            
+
 
     #=========================================================================
     # Calculate average tube front-wall temperature for full receiver or per panel       
@@ -1130,13 +1129,12 @@ class BillboardReceiver:
             for p in range(self.Npanels):
                 avg[p] = sum([self.tube_weights[k] * self.tubes[p][k].Tw[:,0:nthetaq,-1].mean() for k in range(self.ntubesim)])            
         return avg
-    
-    
-    
+
+
     #=========================================================================
     # Set initial guess for mass flow
     def set_initial_mass_flow_guess(self, solve_simple_model = True, verbosity = 1):
-        
+
         #--- Set initial guess for mass flow rates
         est_heat_loss = self.estimate_loss_coeff(hext = 10, dTwallavg = 100)
         Qest = np.zeros(self.npaths)
@@ -1166,7 +1164,8 @@ class BillboardReceiver:
                 print('Time for initial guess = %.3fs'%(timeit.default_timer() - start))
             
         return
-    
+
+
     #=========================================================================
     # Set initial guess for tube temperatures
     def set_initial_T_guess(self, verbosity = 1):
@@ -1180,6 +1179,7 @@ class BillboardReceiver:
             print('Time for initial guess = %.3fs'%(timeit.default_timer() - start))
         return    
 
+
     #=========================================================================
     # Get incident solar flux (used to populate incident flux when solution is unsuccessful)    
     def calculate_total_solar_incidence(self):
@@ -1191,11 +1191,18 @@ class BillboardReceiver:
         self.Qsinc = self.calculate_aggregate_results('Qsinc')
         return
 
+
     #==========================================================================
     # Solve for receiver SS temperature profiles, using currently stored flux profiles, ambient temperature, and wind speed
-    def solve_steady_state_profiles(self, is_iterate_for_hext = False, Ttol = None, allow_initial_guess = True, verbosity = 0):
+    def solve_steady_state_profiles(
+            self,
+            is_iterate_for_hext = False,
+            Ttol = None,
+            allow_initial_guess = True,
+            verbosity = 0
+    ):
 
-        self.update_tube_mass_flow()    
+        self.update_tube_mass_flow()
 
         #--- Initialize results
         self.Tfout_per_panel = np.zeros(self.Npanels)
@@ -1251,8 +1258,8 @@ class BillboardReceiver:
                     # Solve for temperature profile of each simulated tube
                     for k in range(len(elem)):
                         if panel is not None:
-                            elem[k].hext = self.hext_per_panel[panel]  
-                        elem[k].operating_conditions.Tfin = Tfin    
+                            elem[k].hext = self.hext_per_panel[panel]
+                        elem[k].operating_conditions.Tfin = Tfin
                         elem[k].solve_steady_state(verbosity = verbosity-1)
                         if k < len(elem)-1:
                             elem[k+1].Tw = np.copy(elem[k].Tw)   # Use temperature of current tube as initial solution for next tube
@@ -1414,7 +1421,7 @@ class BillboardReceiver:
 
         if calculate_mflow:  # Calculate mass flow to achieve target outlet T
             self.set_mass_flow_and_solve_steady_state(False, use_current_flow_as_guess, verbosity = verbosity)
-        else:  # Solve using current mass flow in self.mflow_per_path
+        else: # Solve using current mass flow in self.mflow_per_path
             self.solve_steady_state_profiles(is_iterate_for_hext = True, verbosity = verbosity)
 
         if not self.stopped:  # Solution was successfully completed
