@@ -334,6 +334,8 @@ class Case():
         )
 
         self.fluxgrid = self.ideal_fluxgrid
+        print(type(self.fluxgrid))
+        quit()
 
         print()
         print()
