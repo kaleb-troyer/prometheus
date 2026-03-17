@@ -35,7 +35,7 @@ def hel_soiling(
         An array of the new ideal flux values after soiling.
     """
 
-    # placeholder function, theoretical operation is as follows:
+    # placeholder function, theoretical usage is as follows:
     # 1) copy and scale hel_imgs using factors from hel_soil
     # 2) calculate fractional loss of power due to soiling using
     #    copy of hel_imgs and original
@@ -49,6 +49,8 @@ def hel_shading(
     fluxgrid: np.ndarray,
     fld_layout: dict,
     occluder: np.ndarray,
+    dimensions: tuple,
+    location: tuple,
 ) -> tuple[dict, np.ndarray]:
     """
     Returns modified copies of each heliostat image and the fluxgrid according
@@ -66,10 +68,14 @@ def hel_shading(
         A dictionary of heliostats (keys) and their (x, y) coordinates (values)
         relative to the solar tower.
     occluder : np.ndarray
-        An array describing the shape, size, and location of the occluder's
-        shadow on the solar field. The array is scaled and translated to match
-        the total size of the solar field. Values may range from 0 to 1, where
-        0 indicates no shading and 1 indicates complete shading.
+        An array describing the shape of the occluder's shadow on the solar
+        field. The array is scaled and translated to match the dimensions and
+        location variables. Values may range from 0 to 1, where 0 indicates no
+        shading and 1 indicates complete shading.
+    dimensions : np.ndarray
+        A tuple of the x and y dimensions of the occluder, in meters.
+    location : np.ndarray
+        A tuple of the x and y coordinates of the occluder, in meters.
 
     Returns
     ---------------
@@ -79,19 +85,39 @@ def hel_shading(
         An array of the new ideal flux values after soiling.
     """
 
-    # placeholder function, theoretical operation is as follows:
+    # placeholder function, theoretical usage is as follows:
     # 1) create a copy of hel_imgs
-    # 2) scale and translate the occluder image so it matches the proportions
-    #    of the solar field
+    # 2) scale, translate, and apply the occluder image
     # 3) identify which heliostats are effected by the occluder and scale their
-    #    flux image according to the occlusion factor
+    #    flux image values according to the occlusion factor
     # 4) calculate fractional loss of power due to shading
-    # 3) copy and scale fluxgrid based on fractional loss of power
+    # 3) copy and scale ideal fluxgrid based on fractional loss of power
     # 4) return new hel_imgs and fluxgrid as tuple
-    #
-    # NOTE, as written the function scales the image to match the total size of
-    # the solar field. It may be easier to specify the dimensions and location
-    # of the occluder instead.
+
+    pass
+
+def img_to_occl(
+    file: str,
+) -> np.ndarray:
+    """
+    Converts a grayscale image into an array of occlusion values from 0 to 1.
+
+    Parameters
+    ---------------
+    file : str
+        Complete path to the grayscale occlusion image.
+
+    Returns
+    ---------------
+    occluder : np.ndarray
+        An array describing the shape of the occluder's shadow on the solar
+        field.
+    """
+
+    # placeholder function, theoretical usage is as follows:
+    # 1) load a grayscale image file
+    # 2) convert the image into an NxM array, where N and M are the dimensions
+    #    of the image and each entry corresponds to a pixel and value.
 
     pass
 
