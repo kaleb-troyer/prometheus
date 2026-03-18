@@ -77,7 +77,6 @@ class Parameters():
         self.opt = core.loader.load(schema.Optimizer, ins.OPTIMIZER)
 
         self._processing()
-        # self.freeze()
         return self
 
     def copy(self):
@@ -118,7 +117,6 @@ class Parameters():
         self.opt = core.loader.load(schema.Optimizer, data['opt'])
 
         self._processing()
-        # self.freeze()
         return self
 
     def freeze(self):
@@ -247,6 +245,7 @@ class Case():
         self.rec = par.rec
         self.hel = par.hel
         self.hash = par.hash
+        self._par = par
 
         # The damage tool's primary purpose is to provide life-
         # time estimates using the products of the thermal tool,
@@ -279,7 +278,44 @@ class Case():
         )
 
     def copy(self):
+        """
+        Returns a deepcopy of the class.
+        """
         return deepcopy(self)
+
+    def setup(self) -> bool:
+        """
+        Defers computationally expensive initialization. Generates the ideal
+        fluxgrid, an optimized solar field layout, and each heliostat flux
+        image. If successful, the case folder is created and all products are
+        moved from temporary file storage to the case folder.
+        """
+        try: self._generate_ideal_fluxgrid()
+        except Exception as err:
+            print(f"Failed to generate ideal fluxgrid: {err}")
+            return False
+
+        try: self._generate_field_layout()
+        except Exception as err:
+            print(f"Failed to generate solar field layout: {err}")
+            return False
+
+        try: self._generate_flux_images()
+        except Exception as err:
+            print(f"Failed to generate heliostat flux images: {err}")
+            return False
+
+        self._par.freeze()
+        self._move_files()
+        return True
+
+    def _move_files(self):
+        """
+        Transfers files from temporary storage to the case directory.
+        """
+
+        pass
+
 
     def get_lifetime_estimate(self, fluxgrid=None):
 
@@ -311,7 +347,7 @@ class Case():
         # example in jacob's code?
         pass
 
-    def _generate_ideal_flux_grid(self):
+    def _generate_ideal_fluxgrid(self):
 
         # inherited problems with this function:
         # - Jacob's code is not designed to use anything other than
@@ -445,7 +481,7 @@ if __name__=='__main__':
     par = Parameters().load()
     des = Case(par)
 
-    des._generate_ideal_flux_grid()
+    des._generate_ideal_fluxgrid()
     LTEs = des.get_lifetime_estimate()
     print(LTEs)
 

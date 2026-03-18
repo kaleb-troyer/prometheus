@@ -4,6 +4,7 @@
 # Kaleb Troyer
 
 from core.system import Parameters, Case
+from core.prometheus import Prometheus
 
 def main():
     par = Parameters().load()
