@@ -4,7 +4,7 @@
 
 import numpy as np
 
-import core.wenner.util as util
+import core.thermals.util as util
 
 class OperatingConditions:
     def __init__(self):

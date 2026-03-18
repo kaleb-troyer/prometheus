@@ -5,13 +5,13 @@
 
 import numpy as np
 
-import core.wenner.tube_view_factors as tube_view_factors
-import core.wenner.materials as materials
-import core.wenner.radiosity as radiosity
-import core.wenner.operating_conditions as operating_conditions
-import core.wenner.settings as settings
-import core.wenner.cross_section as cross_section
-import core.wenner.elastic_stress as elastic_stress
+import core.thermals.tube_view_factors as tube_view_factors
+import core.thermals.materials as materials
+import core.thermals.radiosity as radiosity
+import core.thermals.operating_conditions as operating_conditions
+import core.thermals.settings as settings
+import core.thermals.cross_section as cross_section
+import core.thermals.elastic_stress as elastic_stress
 
 def solve_tube_time_point(inputs):
     tube = inputs[0]

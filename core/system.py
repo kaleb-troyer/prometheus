@@ -16,13 +16,13 @@ import os
 from dataclasses import dataclass, field, asdict, is_dataclass
 from copy import deepcopy
 
-import core.wenner.informed_aiming as ia
-import core.wenner.thermal_model as tm
-import core.wenner.damage_tool as dt
+import core.thermals.informed_aiming as ia
+import core.thermals.thermal_model as tm
+import core.thermals.damage_tool as dt
 import config.schema as schema
 import config.inputs as ins
 import core.loader
-from core.wenner.tube_jwenner import Tube
+from core.thermals.tube_jwenner import Tube
 
 # NOTE: Parameters.freeze() function generates the case hash and saves the
 # parameters in a json under the case directory. This function probably shouldnt

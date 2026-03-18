@@ -16,7 +16,7 @@ from scipy.spatial import Delaunay
 from matplotlib import cm
 from pathlib import Path
 
-import core.wenner.material_limits as material_limits
+import core.thermals.material_limits as material_limits
 
 class damageTool():
 

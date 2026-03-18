@@ -12,10 +12,10 @@ import json
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 from scipy.optimize import curve_fit
 
-import core.wenner.billboard_receiver as billboard_receiver
-import core.wenner.materials as materials
-import core.wenner.settings as settings
-import core.wenner.util as util
+import core.thermals.billboard_receiver as billboard_receiver
+import core.thermals.materials as materials
+import core.thermals.settings as settings
+import core.thermals.util as util
 
 def np_to_json(vars, vals, filename):
     """

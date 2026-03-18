@@ -1,5 +1,5 @@
 # Original author unknown, perhaps an NREL model. No description provided
-# by Jacob's code. --Kaleb Troyer
+# by Jacob's code.
 # 2025-XX-XX
 # Jacob Wenner
 # modified 2026-03-12, Kaleb Troyer
@@ -14,11 +14,11 @@ import json
 from math import pi, sin, floor
 from copy import deepcopy
 
-import core.wenner.operating_conditions as operating_conditions
-import core.wenner.materials as materials
-import core.wenner.settings as settings
-import core.wenner.util as util
-import core.wenner.tube_jwenner as tube
+import core.thermals.operating_conditions as operating_conditions
+import core.thermals.materials as materials
+import core.thermals.settings as settings
+import core.thermals.util as util
+import core.thermals.tube_jwenner as tube
 
 class BillboardReceiver:
     def __init__(self):
